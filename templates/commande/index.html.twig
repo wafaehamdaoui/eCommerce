@@ -1,37 +1,57 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Commande index{% endblock %}
-
+{% extends 'layout.html.twig' %}
+ 
+{% block title %}commande index{% endblock %}
+ 
 {% block body %}
-    <h1>Commande index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Date_commande</th>
-                <th>Montant_total</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for commande in commandes %}
-            <tr>
-                <td>{{ commande.id }}</td>
-                <td>{{ commande.dateCommande ? commande.dateCommande|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ commande.montantTotal }}</td>
-                <td>
-                    <a href="{{ path('app_commande_show', {'id': commande.id}) }}">show</a>
-                    <a href="{{ path('app_commande_edit', {'id': commande.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_commande_new') }}">Create new</a>
+    <div class="container">
+        <h2 class="text-center mt-5 mb-3">Commandes list</h2>
+        <div class="card">
+            <div class="card-header">
+                <a class="btn btn-outline-primary" href="{{ path('app_commande_new') }}"> 
+                    Create New Project 
+                </a>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>#</th>
+                        <th>Date Created</th>
+                        <th>Total Price</th>
+                        <th width="240px">Action</th>
+                    </tr>
+                    {% if commandes %}
+					{% for commande in commandes %}
+                    <tr>
+                        <td>{{ commande.id }}</td>
+                        <td>{{ commande.getDateCommande  ? commande.getDateCommande |date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ commande.getMontantTotal() }}</td>
+                        <td>
+                            <form method="post" action="{{ path('app_commande_delete', {'id': commande.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                <a
+                                    class="btn btn-outline-info"
+                                    href="{{ path('app_commande_show', {'id': commande.id}) }}">
+                                    Show
+                                </a>
+                                <a
+                                    class="btn btn-outline-success"
+                                    href="{{ path('app_commande_edit', {'id': commande.id}) }}">
+                                    Edit
+                                </a>
+ 
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ commande.id) }}">
+                                <button class="btn btn-outline-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="4">no records found</td>
+                    </tr>
+                   {% endif %}
+                </table>
+            </div>
+        </div>
+    </div>
+ 
 {% endblock %}

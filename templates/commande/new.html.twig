@@ -3,9 +3,18 @@
 {% block title %}New Commande{% endblock %}
 
 {% block body %}
-    <h1>Create new Commande</h1>
-
-    {{ include('commande/_form.html.twig') }}
-
-    <a href="{{ path('app_commande_index') }}">back to list</a>
+    <div class="container">
+        <h2 class="text-center mt-5 mb-3">Create Commande</h2>
+        <div class="card">
+            <div class="card-header">
+                <!-- Add header content here -->
+            </div>
+            <div class="card-body">
+                {{ form_start(form, {'attr': {'class': 'form'}}) }}
+                {{ form_widget(form) }}
+                <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}

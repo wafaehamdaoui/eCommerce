@@ -1,30 +1,33 @@
-{% extends 'base.html.twig' %}
-
+{% extends 'layout.html.twig' %}
+ 
 {% block title %}Commande{% endblock %}
-
+ 
 {% block body %}
-    <h1>Commande</h1>
+    <div class="container">
+        <h2 class="text-center mt-5 mb-3">Show Commande</h2>
+        <div class="card">
+            <div class="card-header">
+                <a class="btn btn-outline-info float-right" href="{{ path('app_commande_index') }}">Back to list</a>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ commande.id }}</td>
-            </tr>
-            <tr>
-                <th>Date_commande</th>
-                <td>{{ commande.dateCommande ? commande.dateCommande|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Montant_total</th>
-                <td>{{ commande.montantTotal }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_commande_index') }}">back to list</a>
-
-    <a href="{{ path('app_commande_edit', {'id': commande.id}) }}">edit</a>
-
-    {{ include('commande/_delete_form.html.twig') }}
+            </div>
+            <div class="card-body">
+                <b class="text-muted">Commande Number:</b>
+                <p>{{ commande.id }}</p>
+                <b class="text-muted">Date_commande:</b>
+                <p>{{ commande.dateCommande ? commande.dateCommande|date('Y-m-d H:i:s') : ''  }}</p>
+                <b class="text-muted">Montant_total</b>
+                <p>{{ commande.montantTotal }}</p>
+                <b class="text-muted">Client</b>
+                <p>{{ commande.client }}</p>
+                <b class="text-muted">Produits</b>
+                <p>{{ commande.getProduits|join(', ') }}</p>
+                <div>
+                <a class="btn btn-outline-success float-right" href="{{ path('app_commande_edit', {'id': commande.id}) }}">edit</a>
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ commande.id) }}">
+                <button class="btn btn-outline-danger">Delete</button>
+            </div>
+            </div>
+            
+        </div>
+    </div>
 {% endblock %}
