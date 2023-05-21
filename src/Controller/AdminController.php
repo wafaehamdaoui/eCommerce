@@ -12,7 +12,7 @@ use App\Repository\ClientRepository;
 use App\Repository\ProduitRepository;
 use App\Repository\CategorieRepository;
 use App\Repository\CommandeRepository;
-use App\entity\Sale;
+use App\Entity\Sale;
 
 class AdminController extends AbstractController
 {
@@ -65,7 +65,7 @@ class AdminController extends AbstractController
     {
         $sales = $saleRepository->findAll();
         return $this->render('admin/sales.html.twig',[
-            'sales'=>$sales
+            'sales'=>$sales,
         ]);
     }
 
@@ -113,26 +113,26 @@ class AdminController extends AbstractController
 
     #[Route('/confirm/{id}', name: 'app_confirm')]
     public function confirm($id,CommandeRepository $commandeRepository,
-    SaleRepository $saleRepository,
-    EntityManagerInterface $entityManager,): Response
+    SaleRepository $saleRepository,): Response
     {
         $commande=$commandeRepository->find($id);
         if($commande){
-            $sale=new Sale();
             $products=$commande->getProduits();
             foreach ($products as $product) {
+                $sale=new Sale();
                 $sale->setClient($commande->getClient());
                 $sale->setDate($commande->getDateCommande());
                 $sale->setShippingAddress($commande->getAdresse());
                 $sale->setStatus('pending');
-                $sale->setProduct($product);
                 $sale->setQuantity(1);
-                $entityManager->persist($sale);
-                $entityManager->flush();
+                $sale->setTotalPrice($commande->getMontantTotal());
+                $sale->setProduct($product);
+                $saleRepository->save($sale,true);
             }
-           // $entityManager->remove($commande);
-           // $entityManager->flush();
+            $commandeRepository->remove($commande,true);
         }
         return $this->redirectToRoute('app_sales');
     }
+
+    
 }

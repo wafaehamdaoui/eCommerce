@@ -1,0 +1,79 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+    <main id="main" class="main">
+        <div class="pagetitle">
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
+                    <li class="breadcrumb-item">Sales</li>
+                    <li class="breadcrumb-item active">edit</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+        <div class="card">
+            <div class="card-body">
+                <!-- Floating Labels Form -->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Edit Sale {{ sale.id }}</h5>
+                        <!-- Table with stripped rows -->
+                        {{ form_start(form) }}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class=" form-group mt-3">
+                                    {{ form_label(form.client) }}
+                                    {{ form_widget(form.client, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mt-3">
+                                    {{ form_label(form.product) }}
+                                    {{ form_widget(form.product, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mt-3">
+                                    {{ form_label(form.quantity) }}
+                                    {{ form_widget(form.quantity, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group mt-3">
+                                    {{ form_label(form.shippingAddress) }}
+                                    {{ form_widget(form.shippingAddress, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mt-3">
+                                    {{ form_label(form.date) }}
+                                    {{ form_widget(form.date, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mt-3 mb-3">
+                                {{ form_label(form.status) }}
+                                {{ form_widget(form.status, { 'attr': {'class': 'form-control'} }) }}
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group mt-3">
+                                    {{ form_label(form.totalPrice) }}
+                                    {{ form_widget(form.totalPrice, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-5">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="reset" class="btn btn-secondary">Reset</button>
+                        </div>
+                        {{ form_end(form) }}<!-- End floating Labels Form -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main><!-- End main -->
+
+{% endblock %}
+

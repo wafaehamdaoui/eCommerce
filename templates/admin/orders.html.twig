@@ -27,6 +27,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Customer</th>
                     <th scope="col">Products</th>
+                    <th scope="col">Total Price</th>
                     <th scope="col">Address</th>
                     <th scope="col">Date</th>
                     <th scope="col">Actions</th>
@@ -38,6 +39,7 @@
                     <th scope="row">{{commande.id}}</th>
                     <td>{{commande.client}}</td>
                     <td>{{commande.produits|join(',')}}</td>
+                    <td>{{commande.getMontantTotal()}}</td>
                     <td>{{commande.adresse}}</td>
                     <td>{{commande.getDateCommande()|date('Y-m-d H:i:s')}}</td>
                     <td>

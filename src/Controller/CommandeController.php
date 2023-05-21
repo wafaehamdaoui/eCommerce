@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/commande')]
+#[Route('/orders')]
 class CommandeController extends AbstractController
 {
     #[Route('/', name: 'app_commande_index', methods: ['GET'])]
@@ -66,13 +66,14 @@ class CommandeController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_commande_delete', methods: ['POST'])]
-    public function delete(Request $request, Commande $commande, CommandeRepository $commandeRepository): Response
+    #[Route('/delete/{id}', name: 'app_commande_delete')]
+    public function delete(Request $request, $id, CommandeRepository $commandeRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$commande->getId(), $request->request->get('_token'))) {
-            $commandeRepository->remove($commande, true);
+        $commande=$commandeRepository->find($id);
+        if($commande){
+            $commandeRepository->remove($commande,true);
         }
 
-        return $this->redirectToRoute('app_orders', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_orders',);
     }
 }
