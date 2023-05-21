@@ -37,9 +37,14 @@ class Produit
     #[ORM\ManyToMany(targetEntity: Commande::class, inversedBy: 'produits')]
     private Collection $commandes;
 
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: Sale::class)]
+    private Collection $Sales;
+
     public function __construct()
     {
         $this->commandes = new ArrayCollection();
+        $this->sales = new ArrayCollection();
+        $this->Sales = new ArrayCollection();
     }
 
     public function getId(): ?int

@@ -30,9 +30,13 @@ class Adresse
     #[ORM\OneToMany(mappedBy: 'adresse', targetEntity: Commande::class)]
     private Collection $commandes;
 
+    #[ORM\OneToMany(mappedBy: 'shippingAddress', targetEntity: Sale::class)]
+    private Collection $sales;
+
     public function __construct()
     {
         $this->commandes = new ArrayCollection();
+        $this->sales = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -120,5 +124,35 @@ class Adresse
     public function __toString()
     {
         return $this->rue.','.$this->ville.','.$this->pays;
+    }
+
+    /**
+     * @return Collection<int, Sale>
+     */
+    public function getSales(): Collection
+    {
+        return $this->sales;
+    }
+
+    public function addSale(Sale $sale): self
+    {
+        if (!$this->sales->contains($sale)) {
+            $this->sales->add($sale);
+            $sale->setShippingAddress($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSale(Sale $sale): self
+    {
+        if ($this->sales->removeElement($sale)) {
+            // set the owning side to null (unless already changed)
+            if ($sale->getShippingAddress() === $this) {
+                $sale->setShippingAddress(null);
+            }
+        }
+
+        return $this;
     }
 }

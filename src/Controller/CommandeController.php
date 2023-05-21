@@ -73,6 +73,6 @@ class CommandeController extends AbstractController
             $commandeRepository->remove($commande, true);
         }
 
-        return $this->redirectToRoute('app_commande_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_orders', [], Response::HTTP_SEE_OTHER);
     }
 }

@@ -1,0 +1,67 @@
+{% extends 'layout.html.twig' %}
+{% block body %}
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Data Tables</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
+          <li class="breadcrumb-item">Sales</li>
+          <li class="breadcrumb-item active">Data</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Datatables</h5>
+              <!-- Table with stripped rows -->
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Customer</th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Total Price</th>
+                    <th scope="col">Shipping Address</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {%for sale in sales%}
+                  <tr>
+                    <th scope="row">{{sale.id}}</th>
+                    <td>{{sale.client}}</td>
+                    <td>{{sale.product}}</td>
+                    <td>{{sale.quantity}}</td>
+                    <td>{{sale.totalPrice}}</td>
+                    <td>{{sale.shippingAddress}}</td>
+                    <td>{{sale.date()|date('Y-m-d H:i:s')}}</td>
+                    <td>{{sale.status}}</td>
+                    <td>
+                    <i  class="btn btn-outline-success">Confirm</i>
+                    <i  class="btn btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</i>
+                    </td>
+                  </tr>
+                  {%endfor%}
+                </tbody>
+              </table>
+              <!-- End Table with stripped rows -->
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+{%endblock%}

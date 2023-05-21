@@ -1,0 +1,60 @@
+{% extends 'layout.html.twig' %}
+{% block body %}
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Data Tables</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
+          <li class="breadcrumb-item">Products</li>
+          <li class="breadcrumb-item active">Data</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Datatables</h5>
+              <!-- Table with stripped rows -->
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {%for product in products%}
+                  <tr>
+                    <th scope="row">{{product.id}}</th>
+                    <td>{{product}}</td>
+                    <td>{{product.categorie}}</td>
+                    <td>{{product.prix}}</td>
+                    <td>{{product.qte}}</td>
+                    <td>
+                    <button type="button" class="btn btn-outline-success">Confirm</button>
+                    <button type="button" class="btn btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                    </td>
+                  </tr>
+                  {%endfor%}
+                </tbody>
+              </table>
+              <!-- End Table with stripped rows -->
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+{%endblock%}

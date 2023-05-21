@@ -25,14 +25,18 @@ class Client
     private ?string $mdp = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?adresse $adresse = null;
+    private ?Adresse $adresse = null;
 
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Commande::class)]
     private Collection $commandes;
 
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Sale::class)]
+    private Collection $purchases;
+
     public function __construct()
     {
         $this->commandes = new ArrayCollection();
+        $this->purchases = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -120,5 +124,35 @@ class Client
     public function __toString()
     {
         return $this->nom;
+    }
+
+    /**
+     * @return Collection<int, Sale>
+     */
+    public function getPurchases(): Collection
+    {
+        return $this->purchases;
+    }
+
+    public function addPurchase(Sale $purchase): self
+    {
+        if (!$this->purchases->contains($purchase)) {
+            $this->purchases->add($purchase);
+            $purchase->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removePurchase(Sale $purchase): self
+    {
+        if ($this->purchases->removeElement($purchase)) {
+            // set the owning side to null (unless already changed)
+            if ($purchase->getClient() === $this) {
+                $purchase->setClient(null);
+            }
+        }
+
+        return $this;
     }
 }
